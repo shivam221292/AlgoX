@@ -5,8 +5,6 @@
  */
 package dancinglinks;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author jack
@@ -52,6 +50,7 @@ public class HeaderNode extends Node
         rowNode.setUp(LastRowNode);
         rowNode.setC(this);
         rowNode.setDown(this);
+        this.setUp(rowNode);
         LastRowNode = rowNode;
         RowNodes[rowNode.Row] = rowNode;
         S++;

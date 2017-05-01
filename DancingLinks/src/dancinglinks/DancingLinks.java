@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package dancinglinks;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,6 +21,9 @@ public class DancingLinks {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
+        int blockSizesArr[] = new int[]{4,2,1,1,1};
+        BlockSizes blockSizes = new BlockSizes(blockSizesArr);
+        blockSizes.print();
         List<String> lines = Files.readAllLines(Paths.get("f:\\SparseMatrix.txt"), Charset.defaultCharset());
         int colCount = lines.get(0).length();
         int rowCount = lines.size();
@@ -29,12 +32,18 @@ public class DancingLinks {
         for(String line: lines)
         {
             for(int j = 0; j < colCount; j++)
+            {
                 if(line.charAt(j) == '1')
                     matrix[i][j] = true;
+            }
             i++;
         }
-        SparseMatrix sparseMatrix = new SparseMatrix(matrix, rowCount, colCount);
+        System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("f:\\DancingLinksOutputBlockSize.txt")), true));
+        SparseMatrix sparseMatrix = new SparseMatrix(matrix, rowCount, colCount, blockSizes);
+        //SparseMatrix sparseMatrix = new SparseMatrix(matrix, rowCount, colCount);
+        //sparseMatrix.print();
         sparseMatrix.findExactCover();
+        //sparseMatrix.print();
         /*HeaderNode root = sparseMatrix.Root;
         HeaderNode column = (HeaderNode)root.R;
         while(column != root)

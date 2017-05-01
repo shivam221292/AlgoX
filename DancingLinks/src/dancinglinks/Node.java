@@ -18,8 +18,31 @@ public class Node {
     public HeaderNode C;
     public int Row;
     public int Column;
+    public int RowEltCount;
+    public char Name;
+    static char x = 'A';
+    public Node(int rowNum, int columnNum, int rowEltCount)
+    {
+        Name = x;
+        x++;
+        if(x == 91)
+            x = 'a';
+        Row = rowNum;
+        Column = columnNum;
+        RowEltCount = rowEltCount;
+        //Val = val;
+        L = this;
+        U = this;
+        R = this;
+        D = this;
+        C = null;
+    }
     public Node(int rowNum, int columnNum)
     {
+        Name = x;
+        x++;
+        if(x == 91)
+            x = 'a';
         Row = rowNum;
         Column = columnNum;
         //Val = val;
