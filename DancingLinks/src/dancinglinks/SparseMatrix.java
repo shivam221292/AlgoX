@@ -5,6 +5,9 @@
  */
 package dancinglinks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author jack
@@ -18,6 +21,8 @@ public class SparseMatrix {
     private HeaderNode Columns[];
     int RowCount;
     int ColCount;
+    public static IActionCaller ActionCaller;
+    ArrayList<ArrayList<Integer>> ExactCovers = new ArrayList();
     public SparseMatrix(boolean[][] matrix, int rowCount, int colCount, BlockSizes blockSizes)
     {
         BlockSizes = blockSizes;
@@ -111,9 +116,12 @@ public class SparseMatrix {
         if(Root.R == Root && BlockSizes.isEmpty())
         {
             //Matrix empty, print contents of O
+            int cover[] = new int[k];
             for(int i = 0; i < k; i++)
-                System.out.println(O[i].Row+1);
-            System.out.println("\n\n");
+                cover[i] = O[i].Row;
+            ActionCaller.run(cover);
+                //System.out.println(O[i].Row+1);
+            //System.out.println("\n\n");
         }
         else
         {

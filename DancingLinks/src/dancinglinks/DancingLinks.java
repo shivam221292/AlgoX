@@ -8,6 +8,8 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /**
  *
@@ -19,26 +21,33 @@ public class DancingLinks {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static int BlockSizesArr[] = new int[]{4,2,1,1,1}; 
+    public static int Sets[] = {2, 4, 8, 5};
+    public static int ElementCount = 4;
+    public static IActionCaller ActionCaller;
+    public static void run(){
         // TODO code application logic here
-        int blockSizesArr[] = new int[]{4,2,1,1,1};
-        BlockSizes blockSizes = new BlockSizes(blockSizesArr);
-        blockSizes.print();
-        List<String> lines = Files.readAllLines(Paths.get("f:\\SparseMatrix.txt"), Charset.defaultCharset());
-        int colCount = lines.get(0).length();
-        int rowCount = lines.size();
+
+        BlockSizes blockSizes = new BlockSizes(BlockSizesArr);
+        //blockSizes.print();
+        int colCount = ElementCount;
+        int rowCount = Sets.length;
         boolean matrix[][] = new boolean[rowCount][colCount];
         int i = 0;
-        for(String line: lines)
+        for(int set : Sets)
         {
-            for(int j = 0; j < colCount; j++)
+            String line = Integer.toBinaryString(set);
+            int k = colCount - 1;
+            for(int j = line.length()-1; j >= 0; j--)
             {
                 if(line.charAt(j) == '1')
-                    matrix[i][j] = true;
+                    matrix[i][k] = true;
+                k--;
             }
             i++;
         }
-        System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("f:\\DancingLinksOutputBlockSize.txt")), true));
+        //System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("f:\\DancingLinksOutputBlockSize.txt")), true));
+        SparseMatrix.ActionCaller = ActionCaller;
         SparseMatrix sparseMatrix = new SparseMatrix(matrix, rowCount, colCount, blockSizes);
         //SparseMatrix sparseMatrix = new SparseMatrix(matrix, rowCount, colCount);
         //sparseMatrix.print();
